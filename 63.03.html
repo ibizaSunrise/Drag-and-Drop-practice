@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dataTransfer.dropEffect. 63.03</title>
+    <style>
+        #panel {
+            width: 300px;
+            height: 100px;
+            border: 1px solid red;
+            display: flex;
+
+            align-items: center;
+
+
+        }
+
+        .elem {
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            text-align: center;
+            margin-left: 10px;
+
+        }
+
+        #parent {
+            width: 200px;
+            height: 200px;
+            margin-top: 200px;
+            border: 1px solid black;
+            display: flex;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="panel">
+        <div class='elem'>1</div>
+        <div class='elem'>2</div>
+        <div class='elem'>3</div>
+        <div class='elem'>4</div>
+    </div>
+
+    <div id="parent"></div>
+    <script>
+        let elems = document.querySelectorAll('.elem');
+        let parent = document.querySelector('#parent');
+
+        elems.forEach(function (el, index) {
+            el.draggable = true;
+            el.addEventListener('dragstart', function (event) {
+                event.dataTransfer.setData('index', index);
+
+            })
+        })
+    
+
+        parent.addEventListener('dragover', function (e) {
+            e.preventDefault();
+     
+            e.dataTransfer.dropEffect = 'link'
+           
+
+        })
+
+        parent.addEventListener('drop', function (e) {
+
+            this.append(elems[event.dataTransfer.getData('index')]);
+        })
+    </script>
+
+</body>
+
+</html>
